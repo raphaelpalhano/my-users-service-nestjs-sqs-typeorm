@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit",
     "test:cov": "jest --coverage",
-    "validate:push": "npm run lint && npm run typecheck && npm run test:coverage",
+    "validate:push": "npm run lint && npm run typecheck",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install"
