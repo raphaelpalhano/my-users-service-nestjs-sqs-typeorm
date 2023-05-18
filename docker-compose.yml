@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0.30-debian
+    restart: always
+    environment:
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+    ports:
+      - 3306:3306
+    volumes:
+      - .docker/dbdata:/var/lib/mysql
+    env_file:
+      - .env
+
+  # dynamodb-local:
+  #   image: amazon/dynamodb-local:latest
+  #   container_name: dynamodb-local
+  #   ports:
+  #     - "8000:8000"
+
+  # dynamodb-admin:
+  #   image: aaronshaf/dynamodb-admin
+  #   ports:
+  #     - "8001:8001"
+  #   environment:
+  #     DYNAMO_ENDPOINT: "http://dynamodb-local:8000"
+  #     AWS_REGION: "us-east-1"
+  #     AWS_ACCESS_KEY_ID: test
+  #     AWS_SECRET_ACCESS_KEY: test
+  #   depends_on:
+  #     - dynamodb-local
+
