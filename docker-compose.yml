@@ -1,9 +1,8 @@
 version: '3.8'
 services:
   db:
-    platform: linux/x86_64
-    image: mysql:8.0.30-debian
-    restart: always
+    image: mysql:5.7
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: '${DB_NAME}'
       MYSQL_USER: '${DB_USERNAME}'
@@ -12,7 +11,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - .docker/dbdata:/var/lib/mysql
+      - 'users-service:/var/lib/mysql:rw'
     env_file:
       - .env
 
@@ -34,3 +33,5 @@ services:
   #   depends_on:
   #     - dynamodb-local
 
+volumes:
+  users-service:
