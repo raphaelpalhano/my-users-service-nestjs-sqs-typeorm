@@ -20,6 +20,7 @@ export class FindUsersUsecase {
       throw new HttpException(BAD_REQUEST, HttpStatus.BAD_REQUEST);
     }
     const user = await this.userRepository.findOne({
+      select: ['id', 'email', 'name', 'birthDate', 'createdAt', 'updatedAt'],
       where: {
         id: id,
       },

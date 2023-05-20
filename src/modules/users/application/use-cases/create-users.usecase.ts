@@ -18,7 +18,6 @@ export class CreateUsersUsecase {
       name: savedUser.name,
       email: savedUser.email,
       birthDate: savedUser.birthDate,
-      deletedAt: savedUser.deletedAt,
       id: savedUser.id,
       createdAt: savedUser.createdAt,
       updatedAt: savedUser.updatedAt,

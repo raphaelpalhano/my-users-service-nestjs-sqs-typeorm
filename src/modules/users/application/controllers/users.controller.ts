@@ -5,7 +5,6 @@ import {
   Param,
   ParseIntPipe,
   RequestMethod,
-  Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RouteDefinition } from 'src/core/decorators/route-definition.decorator';
