@@ -7,8 +7,11 @@ import {
   ListUsersUsecase,
   UpdateUserUsecase,
 } from './application/use-cases';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from './database/typeorm/entities/user.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UsersController],
   providers: [
     ListUsersUsecase,

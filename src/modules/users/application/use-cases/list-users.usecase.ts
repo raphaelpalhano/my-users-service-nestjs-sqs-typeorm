@@ -11,7 +11,15 @@ export class ListUsersUsecase {
   ) {}
   execute() {
     const users = this.userRepository.find({
-      select: ['id', 'email', 'name', 'birthDate'],
+      select: [
+        'id',
+        'email',
+        'name',
+        'birthDate',
+        'createdAt',
+        'deletedAt',
+        'updatedAt',
+      ],
     });
 
     return users;

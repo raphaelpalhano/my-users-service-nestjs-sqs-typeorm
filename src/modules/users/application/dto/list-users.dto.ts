@@ -1,4 +1,4 @@
-import { DefaultEntity } from '../../database/typeorm/entities/default.entiy';
+import { DefaultEntity } from '../../database/typeorm/entities/default.entity';
 
 type Users = DefaultEntity & {
   name: string;

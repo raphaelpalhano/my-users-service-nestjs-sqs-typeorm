@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   RequestMethod,
+  Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RouteDefinition } from 'src/core/decorators/route-definition.decorator';
@@ -18,6 +19,7 @@ import {
 } from '../use-cases';
 import { LogDecorator } from 'src/core/decorators/logger.decorator';
 import { CreateUserDto, UpdateUserDto } from '../dto';
+import { UserDto } from '../dto/user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -38,16 +40,16 @@ export class UsersController {
     },
     response: {
       status: HttpStatus.OK,
-      type: {},
+      type: UserDto,
     },
   })
   public async show(@Param('id', new ParseIntPipe()) id: number) {
-    const result = await this.findUserUseCase.execute({ where: { id } });
+    const result = await this.findUserUseCase.execute(id);
     return result;
   }
 
   @RouteDefinition({
-    description: 'list users',
+    description: 'lists users',
     route: {
       method: RequestMethod.GET,
       path: '/',
@@ -68,6 +70,10 @@ export class UsersController {
       method: RequestMethod.POST,
       path: '/',
     },
+    response: {
+      status: HttpStatus.CREATED,
+      type: 'CREATED',
+    },
   })
   public async store(@Body() body: CreateUserDto) {
     return this.createUserUsecase.execute(body);
@@ -79,12 +85,16 @@ export class UsersController {
       method: RequestMethod.PATCH,
       path: '/:id',
     },
+    response: {
+      status: HttpStatus.NO_CONTENT,
+      type: UserDto,
+    },
   })
   public async update(
     @Param('id', new ParseIntPipe()) id: number,
     @Body() body: UpdateUserDto,
   ) {
-    return this.updateUserUsecase.execute(id, body);
+    await this.updateUserUsecase.execute(id, body);
   }
 
   @RouteDefinition({
@@ -93,8 +103,12 @@ export class UsersController {
       method: RequestMethod.DELETE,
       path: '/:id',
     },
+    response: {
+      status: HttpStatus.NO_CONTENT,
+      type: 'DELETED',
+    },
   })
   public async delete(@Param('id', new ParseIntPipe()) id: number) {
-    this.deleteUserUsecase.execute(id);
+    await this.deleteUserUsecase.execute(id);
   }
 }

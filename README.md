@@ -150,6 +150,77 @@ Basicamente sera passado o payload definido:
 O usuario precisa passar o email e password
 
 
+
+## gitflow
+### Configurando 
+git flow init
+
+O git flow já vem com o git instalado e após executar o comando ele irá perguntar sobre as branchs.
+
+Branch de produção?
+ A branch de desenvolvimento?
+Branch de support? [feature, bugfix]
+ 
+
+OBS: Ao finalizar todas as perguntas o git flow irá direcionar para branch develop de imediato.
+
+
+
+Segundo passo: alterações na develop
+
+Faça as alterações na branch develop conforme o escopo, e comece os commits.
+
+Comandos
+
+git add .
+
+git commit -m “....”
+
+### feature
+
+Novas funcionalidades e atualização: branch feature
+
+Passando para branch feature para desenvolver uma nova atualização dentro do projeto e manter a develop funcionando.
+
+
+ git flow feature start function_stages
+
+
+git flow - é o comando que indica que você está trabalhando com git flow
+feature - é o comando para indicar que você vai iniciar ou finalizar o trabalho em uma branch feature.
+start - comando que indica que você vai começar algo novo.
+function_stages - é o nome da branch feature.
+
+
+Comece a fazer as alterações e atualizações na branch feature conforme foi definido. Depois comece os commits.
+
+ git add .
+
+git commit -m “add function stages control”
+
+
+Não tem mais nada para alterar, pode voltar para develop
+
+git flow feature finish function_stages
+
+
+Vai fazer o merge para develop e  excluir a branch localmente e do github e mudar para develop.
+
+
+
+Ou 
+
+      2.1. Continuar o desenvolvimento da funcionalidade daquela feature, faz o publish.
+
+git flow feature publish function_stages 
+
+
+Vai fazer o push da branch feature no github, ou, o repositório que estiver utilizando.
+
+
+
+
+
 ## Project Base
 
 https://gitlab.fcalatam.com/fca/banco-fidis/ms8/invoices-service.git

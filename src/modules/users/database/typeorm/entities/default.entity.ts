@@ -1,11 +1,11 @@
 import {
-  BaseEntity,
   CreateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-export declare class DefaultEntity extends BaseEntity {
+
+export class DefaultEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 

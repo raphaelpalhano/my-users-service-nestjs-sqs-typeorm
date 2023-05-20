@@ -13,6 +13,15 @@ export class CreateUsersUsecase {
 
   public async execute(data: CreateUserDto) {
     const user = this.userRepository.create(data);
-    return await this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
+    return {
+      name: savedUser.name,
+      email: savedUser.email,
+      birthDate: savedUser.birthDate,
+      deletedAt: savedUser.deletedAt,
+      id: savedUser.id,
+      createdAt: savedUser.createdAt,
+      updatedAt: savedUser.updatedAt,
+    };
   }
 }

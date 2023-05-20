@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
 import {
   IsDate,
+  IsDateString,
   IsEmail,
   IsNotEmpty,
   IsString,
@@ -20,7 +21,7 @@ export class CreateUserDto {
   @Transform(({ value }) => parseISO(value))
   @IsDate()
   @IsNotEmpty()
-  birthDate: Date;
+  birthDate: string;
 
   @IsString()
   @IsNotEmpty()
@@ -29,7 +30,7 @@ export class CreateUserDto {
     minUppercase: 1,
     minSymbols: 1,
     minLowercase: 1,
-    minNumbers: 2,
+    minNumbers: 3,
   })
   password: string;
 }
