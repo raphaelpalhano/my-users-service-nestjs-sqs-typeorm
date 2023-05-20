@@ -159,12 +159,15 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"mongodb.mongodb-vscode",
+				"formulahendry.vscode-mysql",
 				"dbaeumer.vscode-eslint",
 				"rvest.vs-code-prettier-eslint",
 				"firsttris.vscode-jest-runner",
 				"zxh404.vscode-proto3",
-				"bradlc.vscode-tailwindcss"
+				"bradlc.vscode-tailwindcss",
+				"esbenp.prettier-vscode",
+				"humao.rest-client",
+				"azuretools.vscode-docker"
 			]
 		}
 	}
