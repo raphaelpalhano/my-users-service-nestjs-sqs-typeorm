@@ -130,70 +130,96 @@
 
 ---------------------------------------------------------------
 
+## Responsabilidade de Servicos
 
+### Auth
 
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+**Criar o usuario**
+
+Basicamente sera passado o payload definido:
+
 {
-	"name": "nestjs-with-tests-api",
+	"name": "string",
+	"email: "string",
+	"password":  "string" -> hash,
+	birthDate: Date
 
-	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
-	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-	"dockerComposeFile": [
-		"../docker-compose.yaml",
-		"docker-compose.yml"
-	],
+}
 
-	// The 'service' property is the name of the service for the container that VS Code should
-	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-	"service": "app",
+**Logar**
+O usuario precisa passar o email e password
 
-	// The optional 'workspaceFolder' property is the path VS Code should open by default when
-	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {},
-		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
-		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"formulahendry.vscode-mysql",
-				"dbaeumer.vscode-eslint",
-				"rvest.vs-code-prettier-eslint",
-				"firsttris.vscode-jest-runner",
-				"zxh404.vscode-proto3",
-				"bradlc.vscode-tailwindcss",
-				"esbenp.prettier-vscode",
-				"humao.rest-client",
-				"azuretools.vscode-docker"
-			]
-		}
-	}
+
+
+## gitflow
+### Configurando 
+git flow init
+
+O git flow já vem com o git instalado e após executar o comando ele irá perguntar sobre as branchs.
+
+Branch de produção?
+ A branch de desenvolvimento?
+Branch de support? [feature, bugfix]
  
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+OBS: Ao finalizar todas as perguntas o git flow irá direcionar para branch develop de imediato.
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
 
-	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
 
-	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-	// "shutdownAction": "none",
+Segundo passo: alterações na develop
 
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "cat /etc/os-release",
+Faça as alterações na branch develop conforme o escopo, e comece os commits.
 
-	// Configure tool-specific properties.
-	// "customizations": {},
+Comandos
 
-	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "devcontainer"
-}
+git add .
+
+git commit -m “....”
+
+### feature
+
+Novas funcionalidades e atualização: branch feature
+
+Passando para branch feature para desenvolver uma nova atualização dentro do projeto e manter a develop funcionando.
+
+
+ git flow feature start function_stages
+
+
+git flow - é o comando que indica que você está trabalhando com git flow
+feature - é o comando para indicar que você vai iniciar ou finalizar o trabalho em uma branch feature.
+start - comando que indica que você vai começar algo novo.
+function_stages - é o nome da branch feature.
+
+
+Comece a fazer as alterações e atualizações na branch feature conforme foi definido. Depois comece os commits.
+
+ git add .
+
+git commit -m “add function stages control”
+
+
+Não tem mais nada para alterar, pode voltar para develop
+
+git flow feature finish function_stages
+
+
+Vai fazer o merge para develop e  excluir a branch localmente e do github e mudar para develop.
+
+
+
+Ou 
+
+      2.1. Continuar o desenvolvimento da funcionalidade daquela feature, faz o publish.
+
+git flow feature publish function_stages 
+
+
+Vai fazer o push da branch feature no github, ou, o repositório que estiver utilizando.
+
+
+
+
 
 ## Project Base
 
