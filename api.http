@@ -1,0 +1,21 @@
+
+###
+GET http://localhost:3000/users/1
+
+###
+GET http://localhost:3000/login
+
+
+
+###
+POST http://localhost:3000/auth
+
+Content-Type: application/json
+
+{
+    "name": "rafa",
+    "email": "rafael123@gmail.com",
+    "password": "ABds1231123.",
+    "birthDate": "1998-05-18T04:20:00.490Z"
+
+}
