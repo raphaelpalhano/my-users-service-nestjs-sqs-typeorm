@@ -17,8 +17,8 @@ export class ListUsersUsecase {
         'name',
         'birthDate',
         'createdAt',
-        'deletedAt',
         'updatedAt',
+        'age',
       ],
     });
 

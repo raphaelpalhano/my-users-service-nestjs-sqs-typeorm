@@ -10,7 +10,7 @@ const logStream = fs.createWriteStream('api.log', {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   app.setGlobalPrefix('/api/v1');
 

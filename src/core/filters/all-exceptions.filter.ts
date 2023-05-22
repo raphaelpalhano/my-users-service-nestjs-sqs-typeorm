@@ -4,6 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {
@@ -25,21 +26,32 @@ export class AllExceptionsFilters implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
-      const errorResponse = exception.getResponse();
 
+      const errorResponse = exception.getResponse();
       errorMessage =
         (errorResponse as HttpExceptionResponse).error || exception.message;
 
       type =
         (errorResponse as HttpExceptionResponse).typeError || exception.name;
+
+      if (exception instanceof UnauthorizedException) {
+        status = exception.getStatus();
+
+        errorMessage =
+          (errorResponse as HttpExceptionResponse).error || 'access invalid';
+
+        type =
+          (errorResponse as HttpExceptionResponse).typeError || exception.name;
+      }
     } else {
       status = HttpStatus.INTERNAL_SERVER_ERROR;
       errorMessage = 'Critical internal server error occured!';
     }
+
     const errorResponse = this.getErrorResponse(
       status,
-      errorMessage,
       type,
+      errorMessage,
       request,
     );
     const errorLog = this.logError(errorResponse, request, exception);
