@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { DefaultEntity } from './default.entity';
 import * as bcrypt from 'bcrypt';
 
@@ -16,7 +16,11 @@ export class UserEntity extends DefaultEntity {
   @Column({ type: 'date', name: 'birth_date' })
   birthDate: Date;
 
+  @Column({ type: 'int' })
+  age: number;
+
   @BeforeInsert()
+  @BeforeUpdate()
   encryptPass() {
     this.password = bcrypt.hashSync(this.password, 10);
   }

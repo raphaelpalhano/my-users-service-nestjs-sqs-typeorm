@@ -20,5 +20,12 @@ import { UserEntity } from './database/typeorm/entities/user.entity';
     FindUsersUsecase,
     DeleteUsersUsecase,
   ],
+  exports: [
+    ListUsersUsecase,
+    CreateUsersUsecase,
+    UpdateUserUsecase,
+    FindUsersUsecase,
+    DeleteUsersUsecase,
+  ],
 })
 export class UsersModule {}

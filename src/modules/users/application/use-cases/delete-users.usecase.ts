@@ -5,7 +5,7 @@ import { UserEntity } from '../../database/typeorm/entities/user.entity';
 import {
   BAD_REQUEST,
   NOT_FOUND,
-} from '../../domain/constants/users-exceptions.domain';
+} from '../../../../core/domain/constants/users-exceptions.domain';
 
 @Injectable()
 export class DeleteUsersUsecase {
@@ -14,8 +14,8 @@ export class DeleteUsersUsecase {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  public async execute(id: number) {
-    if (id < 1 || typeof id !== 'number') {
+  public async execute(id: string) {
+    if (id.length < 36 || typeof id !== 'string') {
       throw new HttpException(BAD_REQUEST, HttpStatus.BAD_REQUEST);
     }
     const userToDelte = await this.userRepository.findOne({
@@ -29,5 +29,15 @@ export class DeleteUsersUsecase {
     }
 
     await this.userRepository.softDelete({ id });
+
+    return {
+      name: userToDelte.name,
+      email: userToDelte.email,
+      birthDate: userToDelte.birthDate,
+      age: userToDelte.age,
+      id: userToDelte.id,
+      createdAt: userToDelte.createdAt,
+      updatedAt: userToDelte.updatedAt,
+    };
   }
 }

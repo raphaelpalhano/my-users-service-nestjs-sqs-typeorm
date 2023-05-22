@@ -4,7 +4,7 @@ const crypt = require('crypto');
 
 const header = {
   alg: 'HS256',
-  typ: 'JWT',
+  type: 'JWT',
 };
 
 const payload = {

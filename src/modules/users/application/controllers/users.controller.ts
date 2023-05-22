@@ -3,10 +3,11 @@ import {
   Controller,
   HttpStatus,
   Param,
-  ParseIntPipe,
+  ParseUUIDPipe,
   RequestMethod,
+  Res,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { RouteDefinition } from 'src/core/decorators/route-definition.decorator';
 import { ListUsersDto } from '../dto/list-users.dto';
 import {
@@ -16,12 +17,12 @@ import {
   ListUsersUsecase,
   UpdateUserUsecase,
 } from '../use-cases';
-import { LogDecorator } from 'src/core/decorators/logger.decorator';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { UserDto } from '../dto/user.dto';
+import { JwtGuard } from 'src/auth/jwt.guard';
+import { Response } from 'express';
 
 @Controller('users')
-@ApiTags('users')
 export class UsersController {
   constructor(
     private readonly createUserUsecase: CreateUsersUsecase,
@@ -31,6 +32,7 @@ export class UsersController {
     private readonly deleteUserUsecase: DeleteUsersUsecase,
   ) {}
 
+  @UseGuards(JwtGuard)
   @RouteDefinition({
     description: 'Get specific user',
     route: {
@@ -39,14 +41,26 @@ export class UsersController {
     },
     response: {
       status: HttpStatus.OK,
-      type: UserDto,
+      type: '',
     },
   })
-  public async show(@Param('id', new ParseIntPipe()) id: number) {
-    const result = await this.findUserUseCase.execute(id);
+  public async show(@Param('id', new ParseUUIDPipe()) id: string) {
+    const result = await this.findUserUseCase.execute({
+      where: { id },
+      select: [
+        'id',
+        'email',
+        'name',
+        'birthDate',
+        'createdAt',
+        'updatedAt',
+        'age',
+      ],
+    });
     return result;
   }
 
+  @UseGuards(JwtGuard)
   @RouteDefinition({
     description: 'lists users',
     route: {
@@ -58,7 +72,6 @@ export class UsersController {
       type: ListUsersDto,
     },
   })
-  @LogDecorator
   public async index() {
     return this.listUserUseCase.execute();
   }
@@ -78,6 +91,7 @@ export class UsersController {
     return this.createUserUsecase.execute(body);
   }
 
+  @UseGuards(JwtGuard)
   @RouteDefinition({
     description: 'Update user',
     route: {
@@ -85,17 +99,19 @@ export class UsersController {
       path: '/:id',
     },
     response: {
-      status: HttpStatus.NO_CONTENT,
+      status: HttpStatus.ACCEPTED,
       type: UserDto,
     },
   })
   public async update(
-    @Param('id', new ParseIntPipe()) id: number,
+    @Param('id', new ParseUUIDPipe()) id: string,
     @Body() body: UpdateUserDto,
   ) {
-    await this.updateUserUsecase.execute(id, body);
+    const user = await this.updateUserUsecase.execute(id, body);
+    return user;
   }
 
+  @UseGuards(JwtGuard)
   @RouteDefinition({
     description: 'Delete user',
     route: {
@@ -103,11 +119,11 @@ export class UsersController {
       path: '/:id',
     },
     response: {
-      status: HttpStatus.NO_CONTENT,
-      type: 'DELETED',
+      status: HttpStatus.OK,
+      type: UserDto,
     },
   })
-  public async delete(@Param('id', new ParseIntPipe()) id: number) {
-    await this.deleteUserUsecase.execute(id);
+  public async delete(@Param('id', new ParseUUIDPipe()) id: string) {
+    return await this.deleteUserUsecase.execute(id);
   }
 }
