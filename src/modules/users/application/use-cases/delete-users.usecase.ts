@@ -2,10 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../../database/typeorm/entities/user.entity';
-import {
-  BAD_REQUEST,
-  NOT_FOUND,
-} from '../../../../core/domain/constants/users-exceptions.domain';
+import { NOT_FOUND } from '../../../../core/domain/constants/users-exceptions.domain';
 
 @Injectable()
 export class DeleteUsersUsecase {
@@ -15,9 +12,6 @@ export class DeleteUsersUsecase {
   ) {}
 
   public async execute(id: string) {
-    if (id.length < 36 || typeof id !== 'string') {
-      throw new HttpException(BAD_REQUEST, HttpStatus.BAD_REQUEST);
-    }
     const userToDelte = await this.userRepository.findOne({
       where: {
         id: id,

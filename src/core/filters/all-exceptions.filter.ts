@@ -7,11 +7,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as fs from 'fs';
 import {
   CustomHttpExceptionResponse,
   HttpExceptionResponse,
-} from '../interfaces/http-exception-response.interface';
-import * as fs from 'fs';
+} from '../interfaces';
 
 @Catch()
 export class AllExceptionsFilters implements ExceptionFilter {

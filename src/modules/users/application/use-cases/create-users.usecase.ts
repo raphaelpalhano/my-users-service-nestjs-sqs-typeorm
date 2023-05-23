@@ -16,14 +16,8 @@ export class CreateUsersUsecase {
   public async execute(data: CreateUserDto) {
     await this.validIfUserExist(data);
     await this.validIfUserIsLessThanEighteen(data);
-    const createUser = {
-      email: data.email,
-      name: data.name,
-      password: data.password,
-      age: userAge(data.birthDate),
-      birthDate: data.birthDate,
-    };
-    const user = this.userRepository.create(createUser);
+    data.age = userAge(data.birthDate);
+    const user = this.userRepository.create(data);
     const savedUser = await this.userRepository.save(user);
     return {
       name: savedUser.name,
