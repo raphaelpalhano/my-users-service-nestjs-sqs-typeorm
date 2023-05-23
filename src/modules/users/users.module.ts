@@ -5,7 +5,7 @@ import {
   CreateUsersUsecase,
   DeleteUsersUsecase,
   ListUsersUsecase,
-  UpdateUserUsecase,
+  UpdateUsersUsecase,
 } from './application/use-cases';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './database/typeorm/entities/user.entity';
@@ -16,14 +16,14 @@ import { UserEntity } from './database/typeorm/entities/user.entity';
   providers: [
     ListUsersUsecase,
     CreateUsersUsecase,
-    UpdateUserUsecase,
+    UpdateUsersUsecase,
     FindUsersUsecase,
     DeleteUsersUsecase,
   ],
   exports: [
     ListUsersUsecase,
     CreateUsersUsecase,
-    UpdateUserUsecase,
+    UpdateUsersUsecase,
     FindUsersUsecase,
     DeleteUsersUsecase,
   ],

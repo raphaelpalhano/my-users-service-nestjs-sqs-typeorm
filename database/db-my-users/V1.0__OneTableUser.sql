@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS `users` (
   id CHAR(36) NOT NULL,
   `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -6,8 +7,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` VARCHAR(30) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `birth_date` DATE NOT NULL,
+  `birthDate` VARCHAR(10) NOT NULL,
   `age` INT NULL,
 
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4;
+
+DROP TABLE users;

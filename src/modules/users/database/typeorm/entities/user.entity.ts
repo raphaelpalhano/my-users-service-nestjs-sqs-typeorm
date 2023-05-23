@@ -13,8 +13,8 @@ export class UserEntity extends DefaultEntity {
   @Column()
   password: string;
 
-  @Column({ type: 'date', name: 'birth_date' })
-  birthDate: Date;
+  @Column({ name: 'birth_date' })
+  birthDate: string;
 
   @Column({ type: 'int' })
   age: number;
@@ -23,5 +23,18 @@ export class UserEntity extends DefaultEntity {
   @BeforeUpdate()
   encryptPass() {
     this.password = bcrypt.hashSync(this.password, 10);
+  }
+
+  constructor(user?: Partial<UserEntity>) {
+    super();
+    this.id = user?.id;
+    this.name = user?.name;
+    this.email = user?.email;
+    this.age = user?.age;
+    this.birthDate = user?.birthDate;
+    this.password = user?.password;
+    this.createdAt = user?.createdAt;
+    this.updatedAt = user?.updatedAt;
+    this.deletedAt = user?.deletedAt;
   }
 }

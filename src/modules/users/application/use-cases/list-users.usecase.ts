@@ -9,8 +9,8 @@ export class ListUsersUsecase {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
-  execute() {
-    const users = this.userRepository.find({
+  public async execute() {
+    const users = await this.userRepository.find({
       select: [
         'id',
         'email',

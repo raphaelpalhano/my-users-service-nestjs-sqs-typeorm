@@ -5,22 +5,19 @@ import {
   Param,
   ParseUUIDPipe,
   RequestMethod,
-  Res,
   UseGuards,
 } from '@nestjs/common';
-import { RouteDefinition } from 'src/core/decorators/route-definition.decorator';
-import { ListUsersDto } from '../dto/list-users.dto';
 import {
   CreateUsersUsecase,
   DeleteUsersUsecase,
   FindUsersUsecase,
   ListUsersUsecase,
-  UpdateUserUsecase,
+  UpdateUsersUsecase,
 } from '../use-cases';
-import { CreateUserDto, UpdateUserDto } from '../dto';
-import { UserDto } from '../dto/user.dto';
+import { CreateUserDto, ListUsersDto, UpdateUserDto } from '../dto';
 import { JwtGuard } from 'src/auth/jwt.guard';
-import { Response } from 'express';
+import { UserDto } from '../dto/user.dto';
+import { RouteDefinition } from 'src/core/decorators';
 
 @Controller('users')
 export class UsersController {
@@ -28,7 +25,7 @@ export class UsersController {
     private readonly createUserUsecase: CreateUsersUsecase,
     private readonly listUserUseCase: ListUsersUsecase,
     private readonly findUserUseCase: FindUsersUsecase,
-    private readonly updateUserUsecase: UpdateUserUsecase,
+    private readonly updateUserUsecase: UpdateUsersUsecase,
     private readonly deleteUserUsecase: DeleteUsersUsecase,
   ) {}
 

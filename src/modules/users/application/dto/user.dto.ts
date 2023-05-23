@@ -13,7 +13,7 @@ export class UserDto {
   @IsOptional()
   @IsNegative()
   @IsNumber()
-  id: number;
+  id: string;
 
   @IsString()
   @IsOptional()

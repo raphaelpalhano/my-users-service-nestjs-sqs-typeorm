@@ -106,8 +106,8 @@
 
 [ x] - retorno válido: User
 
-* não exibir campo password 
-* exibir idade calculada do usuário em anos
+* não exibir campo password x
+* exibir idade calculada do usuário em anos x
 
 [x ] - retornar um erro caso o usuário não seja encontrado
 
@@ -134,88 +134,19 @@
 
 ### Auth
 
-**Criar o usuario**
-
-Basicamente sera passado o payload definido:
-
-{
-	"name": "string",
-	"email: "string",
-	"password":  "string" -> hash,
-	birthDate: Date
-
-}
-
 **Logar**
 O usuario precisa passar o email e password
 
+{
+	"email: "string",
+	"password":  "string" -> hash,
 
+}
 
-## gitflow
-### Configurando 
-git flow init
+Generate Token: 21312asdsajo12je102j12djos
 
-O git flow já vem com o git instalado e após executar o comando ele irá perguntar sobre as branchs.
+Passar token no header: Berear: Token
 
-Branch de produção?
- A branch de desenvolvimento?
-Branch de support? [feature, bugfix]
- 
-
-OBS: Ao finalizar todas as perguntas o git flow irá direcionar para branch develop de imediato.
-
-
-
-Segundo passo: alterações na develop
-
-Faça as alterações na branch develop conforme o escopo, e comece os commits.
-
-Comandos
-
-git add .
-
-git commit -m “....”
-
-### feature
-
-Novas funcionalidades e atualização: branch feature
-
-Passando para branch feature para desenvolver uma nova atualização dentro do projeto e manter a develop funcionando.
-
-
- git flow feature start function_stages
-
-
-git flow - é o comando que indica que você está trabalhando com git flow
-feature - é o comando para indicar que você vai iniciar ou finalizar o trabalho em uma branch feature.
-start - comando que indica que você vai começar algo novo.
-function_stages - é o nome da branch feature.
-
-
-Comece a fazer as alterações e atualizações na branch feature conforme foi definido. Depois comece os commits.
-
- git add .
-
-git commit -m “add function stages control”
-
-
-Não tem mais nada para alterar, pode voltar para develop
-
-git flow feature finish function_stages
-
-
-Vai fazer o merge para develop e  excluir a branch localmente e do github e mudar para develop.
-
-
-
-Ou 
-
-      2.1. Continuar o desenvolvimento da funcionalidade daquela feature, faz o publish.
-
-git flow feature publish function_stages 
-
-
-Vai fazer o push da branch feature no github, ou, o repositório que estiver utilizando.
 
 
 ## Valid User
@@ -229,6 +160,38 @@ Payload:
 }
 
 
+
+## SWC Build
+
+### Install
+
+npm i -D @swc/core @swc/jest
+
+### transform
+
+ "transform": {
+      "^.+\\.(t|j)s$": "@swc/jest"
+    },
+
+### file config    
+
+root: .swcrc
+
+{
+    "jsc": {
+        "parser": {
+            "syntax": "typescript",
+            "tsc": false,
+            "decorators": true
+        },
+        "target": "es2017",
+        "keepClassNames": true,
+        "transform": {
+            "legacyDecorator": true,
+            "decoratorMetadata": true
+        }
+    }
+}
 
 ## Project Base
 
