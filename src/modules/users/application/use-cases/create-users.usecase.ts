@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../../database/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -11,6 +11,8 @@ import { SQSProducer } from 'src/core/producer';
 
 @Injectable()
 export class CreateUsersUsecase {
+  private readonly logger = new Logger(CreateUsersUsecase.name);
+
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
@@ -38,10 +40,19 @@ export class CreateUsersUsecase {
       user: payloadSavedUser,
     };
 
-    await this.sqsProducer.emit(
-      SQS_QUEUE_NAME.userCreated,
-      requestHttpWebHookPayload,
-    );
+    try {
+      await this.sqsProducer.emit(
+        SQS_QUEUE_NAME.userCreated,
+        requestHttpWebHookPayload,
+      );
+    } catch (error) {
+      this.logger.error(
+        `::: Error ao enviar a mensagem ao sqs:  ${
+          (error as Error).message
+        } :::`,
+      );
+    }
+
     return payloadSavedUser;
   }
 
