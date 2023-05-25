@@ -15,23 +15,24 @@ services:
     env_file:
       - .env
 
-  # dynamodb-local:
-  #   image: amazon/dynamodb-local:latest
-  #   container_name: dynamodb-local
-  #   ports:
-  #     - "8000:8000"
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - SERVICES=s3
+      - DEBUG=1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
 
-  # dynamodb-admin:
-  #   image: aaronshaf/dynamodb-admin
-  #   ports:
-  #     - "8001:8001"
-  #   environment:
-  #     DYNAMO_ENDPOINT: "http://dynamodb-local:8000"
-  #     AWS_REGION: "us-east-1"
-  #     AWS_ACCESS_KEY_ID: test
-  #     AWS_SECRET_ACCESS_KEY: test
-  #   depends_on:
-  #     - dynamodb-local
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:4510-4559:4510-4559"  # external service port range
+      - "127.0.0.1:4566:4566"            # LocalStack Edge Proxy
+    volumes:
+      - './tmp/localstack:/var/lib/localstack/:rw'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
 
 volumes:
   users-service:

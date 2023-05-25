@@ -1,14 +1,20 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../../database/typeorm/entities/user.entity';
 import { NOT_FOUND } from '../../../../core/domain/constants/users-exceptions.domain';
+import { SQSProducer } from 'src/core/producer';
+import { SQSPayloadDto } from '../dto/sqs-payload.dto';
+import { SQS_QUEUE_NAME } from 'src/core/domain/enums/sqs-queu.enum';
 
 @Injectable()
 export class DeleteUsersUsecase {
+  private readonly logger = new Logger(DeleteUsersUsecase.name);
+
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private readonly sqsProducer: SQSProducer,
   ) {}
 
   public async execute(id: string) {
@@ -24,17 +30,13 @@ export class DeleteUsersUsecase {
 
     await this.userRepository.softDelete(id);
 
-    // const deletedUser = await this.userRepository.query(
-    //   `SELECT * FROM users WHERE id=${id};`,
-    // );
-
     const deletedUser = await this.userRepository
       .createQueryBuilder('user')
       .withDeleted()
       .where('user.id = :id', { id })
       .getOne();
 
-    return {
+    const payloadUser = {
       name: deletedUser.name,
       email: deletedUser.email,
       birthDate: deletedUser.birthDate,
@@ -44,5 +46,17 @@ export class DeleteUsersUsecase {
       updatedAt: deletedUser.updatedAt,
       deletedAt: deletedUser.deletedAt,
     };
+
+    const requestHttpWebHookPayload: SQSPayloadDto = {
+      eventType: 'userDeleted',
+      user: payloadUser,
+    };
+
+    await this.sqsProducer.emit(
+      SQS_QUEUE_NAME.userDeleted,
+      requestHttpWebHookPayload,
+    );
+
+    return payloadUser;
   }
 }

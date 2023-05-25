@@ -15,7 +15,7 @@ import {
   UpdateUsersUsecase,
 } from '../use-cases';
 import { CreateUserDto, ListUsersDto, UpdateUserDto } from '../dto';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from 'src/modules/auth/jwt.guard';
 import { UserDto } from '../dto/user.dto';
 import { RouteDefinition } from 'src/core/decorators';
 

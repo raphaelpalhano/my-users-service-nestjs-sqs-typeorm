@@ -160,12 +160,20 @@ Payload:
 }
 
 
+## Localstack
 
-## SWC Build
+### Configurations
 
-### Install
+#### SQS PRODUCERS
+AWS_SQS_CREATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_CREATED_USER
+AWS_SQS_DELETED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_DELETED_USER
+AWS_SQS_UPDATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_UPDATED_USER
 
-npm i -D @swc/core @swc/jest
+**Create queue:**
+AWS_SQS_CREATED_USER
+AWS_SQS_UPDATED_USER
+AWS_SQS_DELETED_USER
 
-### transform
+**start:**
+docker compose up -d
 
