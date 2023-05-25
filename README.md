@@ -130,6 +130,14 @@
 
 ---------------------------------------------------------------
 
+## Consumir as rotas
+
+command: docker compose up -d
+
+command: npm run start:dev
+
+Acessar pasta postman e importar o arquivo no postman
+
 ## Responsabilidade de Servicos
 
 ### Auth
@@ -164,14 +172,17 @@ Payload:
 ### Configurations
 
 #### SQS PRODUCERS
-AWS_SQS_CREATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_CREATED_USER
-AWS_SQS_DELETED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_DELETED_USER
-AWS_SQS_UPDATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_UPDATED_USER
+# SQS PRODUCERS
+AWS_SQS_URL_READY=http://localhost:4566/000000000000/AWS_SQS_URL_READY
+AWS_SQS_URL_READY_CREATED_USER=http://localhost:4566/000000000000/AWS_SQS_URL_READY_CREATED_USER
+AWS_SQS_URL_READY_DELETED_USER=http://localhost:4566/000000000000/AWS_SQS_URL_READY_DELETED_USER
+AWS_SQS_URL_READY_UPDATED_USER=http://localhost:4566/000000000000/AWS_SQS_URL_READY_UPDATED_USER
 
 **Create queue:**
-AWS_SQS_CREATED_USER
-AWS_SQS_UPDATED_USER
-AWS_SQS_DELETED_USER
+AWS_SQS_URL_READY_CREATED_USER
+AWS_SQS_URL_READY_DELETED_USER
+AWS_SQS_URL_READY_UPDATED_USER
+
 
 **start:**
 docker compose up -d
