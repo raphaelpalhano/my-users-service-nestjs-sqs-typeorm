@@ -149,7 +149,6 @@ Passar token no header: Berear: Token
 
 
 
-## Valid User
 
 URL: http://localhost:3000/api/v1/auth
 

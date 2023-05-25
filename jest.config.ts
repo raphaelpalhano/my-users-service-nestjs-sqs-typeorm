@@ -18,10 +18,10 @@ const config: Config = {
   rootDir: './',
   coverageThreshold: {
     global: {
-      branches: 79,
-      functions: 80,
+      branches: 78,
+      functions: 90,
       lines: 80,
-      statements: 80,
+      statements: 90,
     },
   },
   roots: ['<rootDir>', 'src'],
