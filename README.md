@@ -16,8 +16,8 @@
 ##### :zap: Premissas
 
 * utilize os padrões (diretórios) do Micro Serviço `invoices-service` adotados no `MS8` x
-* todas as regras de negócio deverá estar coberta por testes unitários ?
-* todas as rotas deverão ter pelo menos um test e2e ?
+* todas as regras de negócio deverá estar coberta por testes unitários x
+* todas as rotas deverão ter pelo menos um test e2e x
 * cada registro salvo deverá gerar uma mensagem em uma fila SQS ?
   * Utilize o localstack para isso ?
   * Fila: `SQS_USERS` ?
@@ -168,32 +168,4 @@ Payload:
 npm i -D @swc/core @swc/jest
 
 ### transform
-
- "transform": {
-      "^.+\\.(t|j)s$": "@swc/jest"
-    },
-
-### file config    
-
-root: .swcrc
-
-{
-    "jsc": {
-        "parser": {
-            "syntax": "typescript",
-            "tsc": false,
-            "decorators": true
-        },
-        "target": "es2017",
-        "keepClassNames": true,
-        "transform": {
-            "legacyDecorator": true,
-            "decoratorMetadata": true
-        }
-    }
-}
-
-## Project Base
-
-https://gitlab.fcalatam.com/fca/banco-fidis/ms8/invoices-service.git
 

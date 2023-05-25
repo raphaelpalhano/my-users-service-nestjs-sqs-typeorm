@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
-import { AllExceptionsFilters } from './core/filters/all-exceptions.filter';
+import { DatabaseModule } from './core/database';
+import { AllExceptionsFilters } from './core/filters';
+import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { DatabaseModule } from './core/database/data-base.module';
 
 @Module({
   imports: [

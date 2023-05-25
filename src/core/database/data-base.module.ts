@@ -17,8 +17,8 @@ export class DatabaseModule {
       TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     );
 
-    for (const conn of connections) {
-      typeOrmConArray.push(TypeOrmModule.forRootAsync(conn));
+    for (const connection of connections) {
+      typeOrmConArray.push(TypeOrmModule.forRootAsync(connection));
     }
 
     return {

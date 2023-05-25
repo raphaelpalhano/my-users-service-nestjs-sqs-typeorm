@@ -16,6 +16,6 @@ async function bootstrap() {
 
   app.use(morgan('tiny', { stream: logStream }));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 9090);
 }
 bootstrap();

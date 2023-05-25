@@ -2,7 +2,18 @@ import type { Config } from 'jest';
 
 const config: Config = {
   collectCoverage: true,
-  collectCoverageFrom: ['src/modules/users/application/use-cases/**/*.ts'],
+  collectCoverageFrom: [
+    'src/modules/users/application/use-cases/**/*.ts',
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/**/*.module.ts',
+    '!<rootDir>/**/index.ts',
+    '!<rootDir>/**/*.consumer.ts',
+    '!<rootDir>/src/main.ts',
+    '!<rootDir>/**/*.mock.ts',
+    '!<rootDir>/**/*.interface.ts',
+    '!<rootDir>/**/*.dto.ts',
+    '!<rootDir>/**/*.constants.ts',
+  ],
   coverageDirectory: './coverage',
   rootDir: './',
   coverageThreshold: {

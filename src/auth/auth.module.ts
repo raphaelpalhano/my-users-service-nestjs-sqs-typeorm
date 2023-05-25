@@ -14,7 +14,7 @@ import { AuthUsecase } from './use-cases';
     PassportModule,
     JwtModule.register({
       privateKey: process.env.SECRET,
-      signOptions: { expiresIn: '3600s' },
+      signOptions: { expiresIn: process.env.EXPIRE_TOKEN },
     }),
   ],
   providers: [AuthUsecase, LocalStrategy, JwtStrategy],
