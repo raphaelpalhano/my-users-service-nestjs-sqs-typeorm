@@ -22,11 +22,3 @@ export const userMock = (qtUsers: number): UserEntity[] => {
 
   return users;
 };
-
-export type userMock = {
-  id: string;
-  name: string;
-  age: number;
-  birthDate: string;
-  email: string;
-};

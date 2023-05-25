@@ -52,10 +52,18 @@ export class DeleteUsersUsecase {
       user: payloadUser,
     };
 
-    await this.sqsProducer.emit(
-      SQS_QUEUE_NAME.userDeleted,
-      requestHttpWebHookPayload,
-    );
+    try {
+      await this.sqsProducer.emit(
+        SQS_QUEUE_NAME.userDeleted,
+        requestHttpWebHookPayload,
+      );
+    } catch (error) {
+      this.logger.error(
+        `::: Error ao enviar a mensagem ao sqs:  ${
+          (error as Error).message
+        } :::`,
+      );
+    }
 
     return payloadUser;
   }

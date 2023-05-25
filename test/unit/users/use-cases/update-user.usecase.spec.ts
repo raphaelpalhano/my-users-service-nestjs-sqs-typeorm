@@ -2,7 +2,9 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CONFLICT, NOT_FOUND } from 'src/core/domain/constants';
+import { SQS_QUEUE_NAMES } from 'src/core/domain/constants/sqs-queue.constants';
 import { userAge } from 'src/core/helpers';
+import { SQSProducer } from 'src/core/producer';
 import { UpdateUserDto } from 'src/modules/users/application/dto';
 import { UpdateUsersUsecase } from 'src/modules/users/application/use-cases';
 import { UserEntity } from 'src/modules/users/database/typeorm/entities';
@@ -13,6 +15,9 @@ describe('Create user in Users Usecase', () => {
   let sut: UpdateUsersUsecase;
   let userRepository: Repository<UserEntity>;
   const userRepositoryMock = repositoryMock();
+  const mockSQSService = {
+    emit: jest.fn(),
+  };
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
@@ -21,6 +26,10 @@ describe('Create user in Users Usecase', () => {
         {
           provide: getRepositoryToken(UserEntity),
           useValue: userRepositoryMock,
+        },
+        {
+          provide: SQSProducer,
+          useValue: mockSQSService,
         },
       ],
     }).compile();
@@ -91,6 +100,10 @@ describe('Create user in Users Usecase', () => {
     expect(userRepository.findOne).toHaveBeenCalledTimes(1);
     expect(userRepository.merge).toHaveBeenCalledTimes(1);
     expect(userRepository.save).toHaveBeenCalledTimes(1);
+    expect(mockSQSService.emit.mock.calls[0][1]).toEqual({
+      eventType: SQS_QUEUE_NAMES.userUpdated,
+      user: result,
+    });
   });
 
   it('I try to update minor user', async () => {
