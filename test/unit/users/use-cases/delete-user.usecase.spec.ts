@@ -2,7 +2,9 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NOT_FOUND } from 'src/core/domain/constants';
+import { SQS_QUEUE_NAMES } from 'src/core/domain/constants/sqs-queue.constants';
 import { userAge } from 'src/core/helpers';
+import { SQSProducer } from 'src/core/producer';
 import { DeleteUsersUsecase } from 'src/modules/users/application/use-cases';
 import { UserEntity } from 'src/modules/users/database/typeorm/entities';
 import { repositoryMock } from 'test/mocks';
@@ -12,6 +14,9 @@ describe('Delete user Usecase', () => {
   let sut: DeleteUsersUsecase;
   let userRepository: Repository<UserEntity>;
   const userRepositoryMock = repositoryMock();
+  const mockSQSService = {
+    emit: jest.fn(),
+  };
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
@@ -20,6 +25,10 @@ describe('Delete user Usecase', () => {
         {
           provide: getRepositoryToken(UserEntity),
           useValue: userRepositoryMock,
+        },
+        {
+          provide: SQSProducer,
+          useValue: mockSQSService,
         },
       ],
     }).compile();
@@ -83,6 +92,10 @@ describe('Delete user Usecase', () => {
     expect(result).toEqual(responseExpect);
     expect(userRepository.findOne).toHaveBeenCalledTimes(1);
     expect(userRepository.softDelete).toHaveBeenCalledTimes(1);
+    expect(mockSQSService.emit.mock.calls[0][1]).toEqual({
+      eventType: SQS_QUEUE_NAMES.userDeleted,
+      user: result,
+    });
   });
 
   it('Given I not found user', async () => {

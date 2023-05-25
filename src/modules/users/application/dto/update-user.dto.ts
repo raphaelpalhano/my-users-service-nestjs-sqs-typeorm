@@ -4,21 +4,17 @@ import {
   IsOptional,
   IsString,
   IsStrongPassword,
+  Matches,
 } from 'class-validator';
-import { Transform, TransformFnParams } from 'class-transformer';
-import { format, parseISO } from 'date-fns';
 
 export class UpdateUserDto {
   @IsString()
   @IsOptional()
   name: string;
 
-  @Transform(({ value }: TransformFnParams) => {
-    const parsedDate = parseISO(value);
-    return format(parsedDate, 'yyyy-MM-dd');
-  })
-  @IsDateString()
+  @IsDateString({ strict: true })
   @IsOptional()
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
   birthDate: string;
 
   @IsString()

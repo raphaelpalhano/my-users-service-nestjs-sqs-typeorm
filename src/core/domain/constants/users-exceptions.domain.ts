@@ -17,3 +17,8 @@ export const CONFLICT = {
   typeError: 'Conflict_data',
   error: 'Nao foi possivel processar a request por conflito nos dados',
 };
+
+export const PRE_CONDITION_ERROR = {
+  typeError: 'Precondition Failed',
+  error: 'Problema em processar requisicao por erro na pre-condicao',
+};

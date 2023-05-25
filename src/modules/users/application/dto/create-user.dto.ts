@@ -1,4 +1,3 @@
-import { Transform, TransformFnParams } from 'class-transformer';
 import {
   IsDateString,
   IsEmail,
@@ -7,8 +6,8 @@ import {
   IsOptional,
   IsString,
   IsStrongPassword,
+  Matches,
 } from 'class-validator';
-import { format, parseISO } from 'date-fns';
 
 export class CreateUserDto {
   @IsString()
@@ -20,12 +19,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string;
 
-  @Transform(({ value }: TransformFnParams) => {
-    const parsedDate = parseISO(value);
-    return format(parsedDate, 'yyyy-MM-dd');
-  })
-  @IsDateString()
   @IsNotEmpty()
+  @IsDateString({ strict: true })
+  @Matches(/^\d{4}-\d{2}-\d{2}$/)
   birthDate: string;
 
   @IsString()
