@@ -9,6 +9,7 @@ import {
 } from './application/use-cases';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './database/typeorm/entities/user.entity';
+import { SQSProducer } from 'src/core/producer';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -19,6 +20,7 @@ import { UserEntity } from './database/typeorm/entities/user.entity';
     UpdateUsersUsecase,
     FindUsersUsecase,
     DeleteUsersUsecase,
+    SQSProducer,
   ],
   exports: [
     ListUsersUsecase,

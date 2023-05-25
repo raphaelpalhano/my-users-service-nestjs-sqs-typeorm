@@ -27,5 +27,5 @@ export class UserDto {
   @Transform(({ value }) => parseISO(value))
   @IsDate()
   @IsOptional()
-  birthDate: Date;
+  birthDate: string;
 }
