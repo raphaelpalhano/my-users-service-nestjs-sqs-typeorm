@@ -45,6 +45,7 @@ describe('Delete user Usecase', () => {
       age: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
+      deletedAt: new Date(),
     });
 
     user.age = userAge(user.birthDate);
@@ -60,12 +61,20 @@ describe('Delete user Usecase', () => {
       id: user.id,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
     };
     // user doesnt exist
     userRepositoryMock.findOne.mockResolvedValue(user);
 
     // register user
     userRepositoryMock.softDelete.mockResolvedValue(user);
+
+    userRepositoryMock.createQueryBuilder = jest.fn().mockReturnValue({
+      withDeleted: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      getOne: jest.fn().mockReturnValue(user),
+    });
+
     //act
     const result = await sut.execute(user.id);
 

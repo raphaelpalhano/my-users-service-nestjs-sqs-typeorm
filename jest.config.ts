@@ -17,16 +17,16 @@ const config: Config = {
   modulePaths: ['<rootDir>'],
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['js', 'ts', 'tsx', 'json'],
-  // preset: '@ms8/jest-testcontainers-mysql',
   preset: 'ts-jest',
   transform: {
     '.+\\.ts$': 'ts-jest',
   },
   testEnvironment: 'node',
-  testMatch: ['**/?(*.)+(spec|test).[t]s?(x)'],
+  testMatch: ['**/?(*.)+(spec|test|e2e-spec).[t]s?(x)'],
   verbose: false,
   watchPlugins: [],
   bail: 0,
+  testPathIgnorePatterns: ['/node_modules/'],
 };
 
 export default config;
