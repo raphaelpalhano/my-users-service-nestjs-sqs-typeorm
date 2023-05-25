@@ -4,7 +4,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { DatabaseModule } from './core/database';
 import { AllExceptionsFilters } from './core/filters';
 import { UsersModule } from './modules/users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SqsInternalModule } from './sqs.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
     DatabaseModule.register(),
     UsersModule,
     AuthModule,
+    SqsInternalModule,
   ],
   controllers: [],
   providers: [{ provide: APP_FILTER, useClass: AllExceptionsFilters }],

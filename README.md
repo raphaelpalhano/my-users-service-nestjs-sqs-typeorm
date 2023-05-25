@@ -150,28 +150,29 @@ Passar token no header: Berear: Token
 
 
 
-## LocalStack
+URL: http://localhost:3000/api/v1/auth
 
-### Start
+Payload:
+{
+    "email": "rafaelo122@gmail.com",
+    "password": "ADss431122.1"
+}
 
-docker run \
-  --rm -it \
-  -p 4566:4566 \
-  -p 4510-4559:4510-4559 \
-  localstack/localstack
 
-docker compose:
+## Localstack
 
- localstack:
-    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
-    image: localstack/localstack
-    ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
-      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
-    environment:
-      - DEBUG=${DEBUG-}
-      - DOCKER_HOST=unix:///var/run/docker.sock
-    volumes:
-      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+### Configurations
+
+#### SQS PRODUCERS
+AWS_SQS_CREATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_CREATED_USER
+AWS_SQS_DELETED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_DELETED_USER
+AWS_SQS_UPDATED_USER=https://localhost.localstack.cloud:4566/000000000000/AWS_SQS_UPDATED_USER
+
+**Create queue:**
+AWS_SQS_CREATED_USER
+AWS_SQS_UPDATED_USER
+AWS_SQS_DELETED_USER
+
+**start:**
+docker compose up -d
 

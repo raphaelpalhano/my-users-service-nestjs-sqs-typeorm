@@ -8,12 +8,16 @@ import {
   NOT_FOUND,
 } from '../../../../core/domain/constants/users-exceptions.domain';
 import { userAge } from 'src/core/helpers/user-age.helper';
+import { SQSPayloadDto } from '../dto/sqs-payload.dto';
+import { SQS_QUEUE_NAME } from 'src/core/domain/enums/sqs-queu.enum';
+import { SQSProducer } from 'src/core/producer';
 
 @Injectable()
 export class UpdateUsersUsecase {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private readonly sqsProducer: SQSProducer,
   ) {}
   public async execute(id: string, data: UpdateUserDto) {
     await this.validIfUserIsLessThanEighteen(data);
@@ -29,6 +33,26 @@ export class UpdateUsersUsecase {
 
     this.userRepository.merge(userToUpdate, data);
     const savedUser = await this.userRepository.save(userToUpdate);
+    const bodyUpdatedUser = {
+      name: savedUser.name,
+      email: savedUser.email,
+      birthDate: savedUser.birthDate,
+      age: savedUser.age,
+      id: savedUser.id,
+      createdAt: savedUser.createdAt,
+      updatedAt: savedUser.updatedAt,
+    };
+
+    const requestHttpWebHookPayload: SQSPayloadDto = {
+      eventType: 'userUpdated',
+      user: bodyUpdatedUser,
+    };
+
+    await this.sqsProducer.emit(
+      SQS_QUEUE_NAME.userUpdated,
+      requestHttpWebHookPayload,
+    );
+
     return {
       name: savedUser.name,
       email: savedUser.email,
