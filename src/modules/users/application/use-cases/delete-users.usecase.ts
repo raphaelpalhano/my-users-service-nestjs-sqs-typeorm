@@ -22,16 +22,27 @@ export class DeleteUsersUsecase {
       throw new HttpException(NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    await this.userRepository.softDelete({ id });
+    await this.userRepository.softDelete(id);
+
+    // const deletedUser = await this.userRepository.query(
+    //   `SELECT * FROM users WHERE id=${id};`,
+    // );
+
+    const deletedUser = await this.userRepository
+      .createQueryBuilder('user')
+      .withDeleted()
+      .where('user.id = :id', { id })
+      .getOne();
 
     return {
-      name: userToDelte.name,
-      email: userToDelte.email,
-      birthDate: userToDelte.birthDate,
-      age: userToDelte.age,
-      id: userToDelte.id,
-      createdAt: userToDelte.createdAt,
-      updatedAt: userToDelte.updatedAt,
+      name: deletedUser.name,
+      email: deletedUser.email,
+      birthDate: deletedUser.birthDate,
+      age: deletedUser.age,
+      id: deletedUser.id,
+      createdAt: deletedUser.createdAt,
+      updatedAt: deletedUser.updatedAt,
+      deletedAt: deletedUser.deletedAt,
     };
   }
 }
