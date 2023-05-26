@@ -8,7 +8,7 @@ import {
   UpdateUsersUsecase,
 } from './application/use-cases';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './database/typeorm/entities/user.entity';
+import { UserEntity } from '../../database/typeorm/entities/user.entity';
 import { SQSProducer } from 'src/core/producer';
 
 @Module({

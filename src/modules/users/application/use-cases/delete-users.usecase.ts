@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../../database/typeorm/entities/user.entity';
+import { UserEntity } from '../../../../database/typeorm/entities/user.entity';
 import { NOT_FOUND } from '../../../../core/domain/constants/users-exceptions.domain';
 import { SQSProducer } from 'src/core/producer';
 import { SQSPayloadDto } from '../dto/sqs-payload.dto';

@@ -187,3 +187,11 @@ AWS_SQS_URL_READY_UPDATED_USER
 **start:**
 docker compose up -d
 
+
+## Swagger
+
+URL: http://localhost:3000/api/doc#/
+
+Possui a detalhes e estrutura para validar cada rota.
+
+

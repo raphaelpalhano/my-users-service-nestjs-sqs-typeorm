@@ -8,8 +8,10 @@ export interface IRoute {
 export interface IConfigRoute {
   description: string;
   route: IRoute;
-  response?: {
+  request?: any;
+  response: {
     status: HttpStatus;
+    description?: any;
     type: any;
   };
 }

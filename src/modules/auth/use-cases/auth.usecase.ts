@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { FindUsersUsecase } from 'src/modules/users/application/use-cases';
 
 import { compareSync } from 'bcrypt';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities/user.entity';
+import { UserEntity } from 'src/database/typeorm/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserDto } from '../dto/login-user.dto';
 
 @Injectable()
 export class AuthUsecase {
@@ -12,8 +13,8 @@ export class AuthUsecase {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(user) {
-    const payload = { sub: user.id, email: user.email };
+  async login(req: LoginUserDto) {
+    const payload = { sub: req.id, email: req.email };
 
     return {
       token: this.jwtService.sign(payload),
