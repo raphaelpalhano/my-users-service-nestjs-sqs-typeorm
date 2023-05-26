@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ListUsersUsecase } from 'src/modules/users/application/use-cases';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { repositoryMock, userMock } from 'test/mocks';
 import { Repository } from 'typeorm';
 

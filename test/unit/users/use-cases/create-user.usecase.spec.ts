@@ -7,7 +7,7 @@ import { userAge } from 'src/core/helpers';
 import { SQSProducer } from 'src/core/producer';
 import { CreateUserDto } from 'src/modules/users/application/dto';
 import { CreateUsersUsecase } from 'src/modules/users/application/use-cases';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { repositoryMock, userMock } from 'test/mocks';
 import { Repository } from 'typeorm';
 

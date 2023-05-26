@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NOT_FOUND } from 'src/core/domain/constants';
 import { FindUsersUsecase } from 'src/modules/users/application/use-cases';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { repositoryMock, userMock } from 'test/mocks';
 import { Repository } from 'typeorm';
 

@@ -5,7 +5,7 @@ import { SqsService } from '@ssut/nestjs-sqs';
 import { SQS_QUEUE_NAME } from 'src/core/domain/enums/sqs-queu.enum';
 
 import { SQSProducer } from 'src/core/producer';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { repositoryMock, userMock } from 'test/mocks';
 
 describe('SQS Producer', () => {

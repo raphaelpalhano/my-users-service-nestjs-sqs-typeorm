@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { faker } from '@faker-js/faker';
 import { userAge } from 'src/core/helpers';
 

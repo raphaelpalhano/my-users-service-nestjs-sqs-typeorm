@@ -172,7 +172,7 @@ Payload:
 ### Configurations
 
 #### SQS PRODUCERS
-# SQS PRODUCERS
+
 AWS_SQS_URL_READY=http://localhost:4566/000000000000/AWS_SQS_URL_READY
 AWS_SQS_URL_READY_CREATED_USER=http://localhost:4566/000000000000/AWS_SQS_URL_READY_CREATED_USER
 AWS_SQS_URL_READY_DELETED_USER=http://localhost:4566/000000000000/AWS_SQS_URL_READY_DELETED_USER
@@ -186,4 +186,12 @@ AWS_SQS_URL_READY_UPDATED_USER
 
 **start:**
 docker compose up -d
+
+
+## Swagger
+
+URL: http://localhost:3000/api/doc#/
+
+Possui a detalhes e estrutura para validar cada rota.
+
 
