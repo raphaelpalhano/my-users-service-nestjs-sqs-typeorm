@@ -14,12 +14,15 @@ import {
   ListUsersUsecase,
   UpdateUsersUsecase,
 } from '../use-cases';
-import { CreateUserDto, ListUsersDto, UpdateUserDto } from '../dto';
+import { CreateUserDto, UpdateUserDto } from '../dto';
 import { JwtGuard } from 'src/modules/auth/jwt.guard';
 import { UserDto } from '../dto/user.dto';
 import { RouteDefinition } from 'src/core/decorators';
+import { ApiTags } from '@nestjs/swagger';
+import { DeletedUserDto } from '../dto/deleted-user.dto';
 
 @Controller('users')
+@ApiTags('users')
 export class UsersController {
   constructor(
     private readonly createUserUsecase: CreateUsersUsecase,
@@ -31,14 +34,15 @@ export class UsersController {
 
   @UseGuards(JwtGuard)
   @RouteDefinition({
-    description: 'Get specific user',
+    description: 'Buscar um usuario pelo id',
     route: {
       method: RequestMethod.GET,
       path: '/:id',
     },
     response: {
       status: HttpStatus.OK,
-      type: '',
+      description: 'Response da rota',
+      type: UserDto,
     },
   })
   public async show(@Param('id', new ParseUUIDPipe()) id: string) {
@@ -59,14 +63,15 @@ export class UsersController {
 
   @UseGuards(JwtGuard)
   @RouteDefinition({
-    description: 'lists users',
+    description: 'listar usuarios cadastrados',
     route: {
       method: RequestMethod.GET,
       path: '/',
     },
     response: {
       status: HttpStatus.OK,
-      type: ListUsersDto,
+      description: 'Response da rota',
+      type: UserDto,
     },
   })
   public async index() {
@@ -74,14 +79,16 @@ export class UsersController {
   }
 
   @RouteDefinition({
-    description: 'create user',
+    description: 'Criar um novo usuario',
     route: {
       method: RequestMethod.POST,
       path: '/',
     },
+    request: CreateUserDto,
     response: {
       status: HttpStatus.CREATED,
-      type: 'CREATED',
+      description: 'Response da rota',
+      type: UserDto,
     },
   })
   public async store(@Body() body: CreateUserDto) {
@@ -90,13 +97,15 @@ export class UsersController {
 
   @UseGuards(JwtGuard)
   @RouteDefinition({
-    description: 'Update user',
+    description: 'Atualizar dados do usuario',
     route: {
       method: RequestMethod.PATCH,
       path: '/:id',
     },
+    request: UpdateUserDto,
     response: {
       status: HttpStatus.ACCEPTED,
+      description: 'Response da rota',
       type: UserDto,
     },
   })
@@ -110,14 +119,15 @@ export class UsersController {
 
   @UseGuards(JwtGuard)
   @RouteDefinition({
-    description: 'Delete user',
+    description: 'Deletar o usuario',
     route: {
       method: RequestMethod.DELETE,
       path: '/:id',
     },
     response: {
       status: HttpStatus.OK,
-      type: UserDto,
+      description: 'Response da rota',
+      type: DeletedUserDto,
     },
   })
   public async delete(@Param('id', new ParseUUIDPipe()) id: string) {

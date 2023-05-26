@@ -9,10 +9,11 @@ import {
   applyDecorators,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { IConfigRoute } from './IRoute';
 
 export function RouteDefinition(config: IConfigRoute): MethodDecorator {
-  const { description, route, response } = config;
+  const { description, route, response, request } = config;
 
   let requestMethod: string;
   switch (route.method) {
@@ -37,19 +38,18 @@ export function RouteDefinition(config: IConfigRoute): MethodDecorator {
 
   const routePath = route.path || '';
 
-  console.log(
-    `description: ${description} \n\n route: ${JSON.stringify(
-      route,
-    )} \n \nresponse ${JSON.stringify(response)}\n`,
-  );
-
   const decorators = [
     SetMetadata('ROUTE_METADATA', {
       path: routePath,
       method: requestMethod,
-      response,
+      response: response,
     }),
-
+    ApiOperation({ summary: description }), // Definir descrição da rota no Swagger
+    ApiResponse({
+      status: response.status,
+      description: response.description,
+      type: response.type,
+    }), // Definir a resposta da rota no Swagger
     UseInterceptors({
       // Crie um interceptor personalizado para modificar a resposta
       intercept(context, next) {
@@ -73,15 +73,35 @@ export function RouteDefinition(config: IConfigRoute): MethodDecorator {
 
   switch (requestMethod) {
     case 'GET':
-      return applyDecorators(...decorators, Get(routePath));
+      return applyDecorators(
+        ...decorators,
+        Get(routePath),
+        ApiBody({}), // Adicionar ApiBody vazio para GET (opcional)
+      );
     case 'POST':
-      return applyDecorators(...decorators, Post(routePath));
+      return applyDecorators(
+        ...decorators,
+        Post(routePath),
+        ApiBody({ type: request }),
+      ); // Definir ApiBody para POST
     case 'PUT':
-      return applyDecorators(...decorators, Put(routePath));
+      return applyDecorators(
+        ...decorators,
+        Put(routePath),
+        ApiBody({ type: request }),
+      ); // Definir ApiBody para PUT
     case 'PATCH':
-      return applyDecorators(...decorators, Patch(routePath));
+      return applyDecorators(
+        ...decorators,
+        Patch(routePath),
+        ApiBody({ type: request }),
+      ); // Definir ApiBody para PATCH
     case 'DELETE':
-      return applyDecorators(...decorators, Delete(routePath));
+      return applyDecorators(
+        ...decorators,
+        Delete(routePath),
+        ApiBody({ type: request }), // Adicionar ApiBody vazio para DELETE (opcional)
+      );
     default:
       throw new Error(`Invalid request method: ${route.method}`);
   }

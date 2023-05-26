@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../../database/typeorm/entities/user.entity';
+import { UserEntity } from '../../../../database/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto';
 import { CONFLICT } from 'src/core/domain/constants/users-exceptions.domain';

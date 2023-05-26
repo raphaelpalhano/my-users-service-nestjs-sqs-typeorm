@@ -6,7 +6,7 @@ import { SQS_QUEUE_NAMES } from 'src/core/domain/constants/sqs-queue.constants';
 import { userAge } from 'src/core/helpers';
 import { SQSProducer } from 'src/core/producer';
 import { DeleteUsersUsecase } from 'src/modules/users/application/use-cases';
-import { UserEntity } from 'src/modules/users/database/typeorm/entities';
+import { UserEntity } from 'src/database/typeorm/entities';
 import { repositoryMock } from 'test/mocks';
 import { Repository } from 'typeorm';
 
